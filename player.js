@@ -1,14 +1,7 @@
-var player = {
-    name : "Ravi",
-    age : 21,
-    sex : 1,
-    family : ["father", "mother", "sister", "grandma"],
-    getName : function(){return this.name},
-    getAge : function(){return this.age},
-    getSex : function(){return this.sex},
-};
+function Player(name, age, color) {
+    this.name = name;
+    this.age = age;
+    this.color = color;
+}
 
-var arr = [
-    function(name){return "My name is: " + name},
-    function(){return "second funciton"}
-];
+var Ravi = new Player('Ravi', 21, function(){ return 'green'});
