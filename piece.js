@@ -1,14 +1,4 @@
-function Piece(color, startPosition) {
+function Piece(color) {
     this.color = color;
-    this.position = startPosition;
-
-    this.move = function(numSpaces) {
-        checkValidMove();
-        moveToSpace();
-    }
-
-    function checkValidMove(here, there) {
-        var path = Board.path;
-        
-    }
+    this.location;
 }

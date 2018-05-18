@@ -2,6 +2,15 @@ function Player( name, age, color ) {
     this.name = name;
     this.age = age;
     this.color = color;
+    this.direction = 'South';
+    this.moves = [];
+
+    this.pieces = [
+        piece1 = new Piece( color ),
+        piece2 = new Piece( color ),
+        piece3 = new Piece( color ),
+        piece4 = new Piece( color )
+    ];
 
     this.rollDice = function( diceArray ) {
         var total = 0;
@@ -10,17 +19,18 @@ function Player( name, age, color ) {
             total += diceArray[i].roll();
         }
 
-        return getRealValue( total );
+        var action = getRealValue( total );
+        this.moves.push(action);
+        return action;
     }
-
 
     function getRealValue( value ) {
         switch ( value ) {
             case 0 :
-                return 4;
+                return 8;
                 break;
             case 4 :
-                return 8;
+                return 4;
                 break;
             default :
                 return value;
@@ -29,4 +39,4 @@ function Player( name, age, color ) {
 
 }
 
-var Ravi = new Player( 'Ravi', 21, function(){ return 'green' } );
+var Ravi = new Player( 'Ravi', 21, 'black' );
