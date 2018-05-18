@@ -25,7 +25,7 @@ function setup() {
     grid = create2DArray( ROWS, COLS );
     for ( i = 0; i < ROWS; i++ ) {
         for ( j = 0; j < COLS; j++ ) {
-            grid[i][j] = new Tile( i*WIDTH, j*WIDTH, WIDTH );
+            grid[i][j] = new Tile( j*WIDTH, i*WIDTH, WIDTH );
         }
     }
 }
@@ -34,12 +34,24 @@ function drawEverything() {
     //black background
     colorRect( 0, 0, canvas.width, canvas.height, 'red' );
 
+    //create home tiles different color
+    grid[0][2].color = "yellow";
+    grid[2][0].color = "red";
+    grid[2][4].color = "green";
+    grid[4][2].color = "blue";
+
+    //objective tiles
+    grid[2][2].color = "black";
+
     //draw tiles
     for ( i = 0; i < ROWS; i++ ) {
         for ( j = 0; j < COLS; j++ ) {
             grid[i][j].show();
         }
     }
+
+
+
 }
 
 function colorRect( leftX, topY, width, height, drawColor ) {
