@@ -1,4 +1,4 @@
-function Tile( x, y, w ) {
+function Objective( x, y, w ) {
     const LINE = 2;
     this.x = x;
     this.y = y;

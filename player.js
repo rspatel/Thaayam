@@ -1,9 +1,9 @@
-function Player( name, age, color ) {
+function Player( name, color ) {
     this.name = name;
-    this.age = age;
     this.color = color;
     this.direction = 'South';
     this.moves = [];
+    this.home;
 
     this.pieces = [
         piece1 = new Piece( color ),
@@ -38,5 +38,3 @@ function Player( name, age, color ) {
     }
 
 }
-
-var Ravi = new Player( 'Ravi', 21, 'black' );
