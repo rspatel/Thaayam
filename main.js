@@ -83,13 +83,15 @@ function setup() {
             playerArr[i].home = grid[2][4];
         }
         else if ( i === 3 ) {
-            playerArr[i].home = grid[2][4];
+            playerArr[i].home = grid[2][0];
         }
     }
 
 }
 
 function drawEverything() {
+    //black background
+    colorRect(0,0,canvas.width,canvas.height,'grey');
 
     //draw tiles
     for ( i = 0; i < ROWS; i++ ) {
@@ -104,10 +106,6 @@ function drawEverything() {
             playerArr[i].pieces[j].draw( playerArr[i].home.slots[0][j][0],  playerArr[i].home.slots[0][j][1] );
         }
     }
-
-    var circle = colorCircle( 250, 250, 10, "gray" );
-    var c = playerArr[0].pieces[0].draw(212, 412);
-
 
 }
 

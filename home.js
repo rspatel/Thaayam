@@ -16,7 +16,7 @@ function Home( x, y, w ) {
         var arr = create2DArray( 4, 4 );
         for ( i = 0; i < 4; i++ ) {
             for ( j = 0; j < 4; j++ ) {
-                arr[i][j] = [ ((x + (j * 12)) + 12), ((y + (i * 12)) + 12) ];
+                arr[i][j] = [ ((x + (j * 22)) + 14), ((y + (i * 22)) + 14) ];
             }
         }
         return arr;
