@@ -36,10 +36,10 @@ function setup() {
     }
 
     //Set the home tiles
-    grid[0][2] = new Home( grid[0][2].x,  grid[0][2].y,  grid[0][2].w);
-    grid[2][0] = new Home( grid[2][0].x,  grid[2][0].y,  grid[2][0].w);
-    grid[2][4] = new Home( grid[2][4].x,  grid[2][4].y,  grid[2][4].w);
-    grid[4][2] = new Home( grid[4][2].x,  grid[4][2].y,  grid[4][2].w);
+    grid[0][2] = new Home( grid[0][2].x,  grid[0][2].y,  grid[0][2].w );
+    grid[2][0] = new Home( grid[2][0].x,  grid[2][0].y,  grid[2][0].w );
+    grid[2][4] = new Home( grid[2][4].x,  grid[2][4].y,  grid[2][4].w );
+    grid[4][2] = new Home( grid[4][2].x,  grid[4][2].y,  grid[4][2].w );
 
     //make home tiles different color
     grid[0][2].color = "yellow";
@@ -90,8 +90,8 @@ function setup() {
 }
 
 function drawEverything() {
-    //black background
-    colorRect(0,0,canvas.width,canvas.height,'grey');
+    //background color
+    colorRect(0,0,canvas.width,canvas.height, "#21618C" );
 
     //draw tiles
     for ( i = 0; i < ROWS; i++ ) {
@@ -119,4 +119,11 @@ function colorCircle(centerX,centerY,radius,color) {
         canvasContext.beginPath();
         canvasContext.arc(centerX,centerY,radius,0,Math.PI*2, true);
         canvasContext.fill();
+}
+
+function rolling() {
+    //background color
+    colorRect(500,0,200,canvas.height, "#21618C" );
+    canvasContext.fillStyle = 'black';
+    canvasContext.fillText( playerArr[0].rollDice( board.dice ), 600, 200 );
 }
