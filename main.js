@@ -5,6 +5,11 @@ var numberOfPlayers = 4;
 var playerArr = [];
 var names = [];
 var colors = [];
+var currentPlayer;
+var rollAgain = false;
+
+
+
 const WIDTH = 100;
 const ROWS = 5;
 const COLS = 5;
@@ -102,7 +107,7 @@ function drawEverything() {
 
     //draw pieces
     for ( i = 0; i < numberOfPlayers; i++ ) {
-        for ( j = 0; j < playerArr[i].pieces.length; j++) {
+        for ( j = 0; j < playerArr[i].pieces.length; j++ ) {
             playerArr[i].pieces[j].draw( playerArr[i].home.slots[0][j][0],  playerArr[i].home.slots[0][j][1] );
         }
     }
@@ -124,6 +129,32 @@ function colorCircle(centerX,centerY,radius,color) {
 function rolling() {
     //background color
     colorRect(500,0,200,canvas.height, "#21618C" );
+
+    currentPlayer = playerArr[0];
+    var number = currentPlayer.rollDice( board.dice );
+    if ( number === 8 || number === 4) {
+        console.log( currentPlayer.moves );
+        rollAgain = true;
+    } else {
+        console.log( currentPlayer.moves );
+        rollAgain = false;
+    }
+    shouldRollAgain();
+
     canvasContext.fillStyle = 'black';
-    canvasContext.fillText( playerArr[0].rollDice( board.dice ), 600, 200 );
+    canvasContext.fillText( currentPlayer.moves, 600, 200 );
+}
+
+// function whosTurn() {
+//
+// }
+
+function shouldRollAgain() {
+    var x = document.getElementById("rollButton");
+    if ( rollAgain ) {
+        x.style.display = "inline-block";
+    }
+    else {
+        x.style.display = "none";
+    }
 }
