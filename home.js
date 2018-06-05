@@ -1,4 +1,4 @@
-function Home( x, y, w ) {
+    function Home( x, y, w ) {
     const LINE = 2;
     this.x = x;
     this.y = y;

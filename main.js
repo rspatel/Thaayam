@@ -7,8 +7,8 @@ var names = [];
 var colors = [];
 var currentPlayer;
 var rollAgain = false;
-
-
+var dragging = false;
+var draggingPiece = null;
 
 const WIDTH = 100;
 const ROWS = 5;
@@ -19,10 +19,100 @@ window.onload = function() {
     canvasContext = canvas.getContext('2d');
 
     setup();
-    drawEverything();
+
+    var framesPerSecond = 60;
+    setInterval(function() {
+        drawEverything();
+    }, 1000/framesPerSecond);
+
+    canvas.addEventListener('mousedown', handleMouseDown);
+
+    canvas.addEventListener('mousemove', handleMouseMove);
+
+    canvas.addEventListener('mouseup', handleMouseUp);
+
 }
 
-function create2DArray(rows, cols) {
+function handleMouseDown(evt) {
+    if ( isPlayersPiece(evt) == true ) {
+        dragging = true;
+    }
+}
+
+function handleMouseMove(evt) {
+    if ( dragging ) {
+        var mouse = calculateMousePos(evt);
+        draggingPiece.x = mouse.x;
+        draggingPiece.y = mouse.y;
+    }
+}
+
+function handleMouseUp(evt) {
+    var location = whatSquare(evt);
+
+    dragging = false;
+    draggingPiece = null;
+}
+
+function isPlayersPiece(evt) {
+    var mouse = calculateMousePos(evt)
+    for ( var i = 0; i < playerArr[0].pieces.length; i++ ) {
+        var isX = false;
+        var isY = false;
+        if ( (mouse.x >= playerArr[0].pieces[i].x - 10) && (mouse.x <= playerArr[0].pieces[i].x + 10) ) {
+            isX = true;
+        }
+        if ( (mouse.y >= playerArr[0].pieces[i].y - 10) && (mouse.y <= playerArr[0].pieces[i].y + 10) ) {
+            isY = true;
+        }
+        if ( isX && isY ) {
+            draggingPiece = playerArr[0].pieces[i];
+            return true;
+        }
+    }
+    return false;
+}
+
+function whatSquare( evt ) {
+    /*
+    1. what square the piece is on
+    2. check if that square is a possible move based on the player's moves
+        a. the path for the player
+        b. what grid cor the piece was originaly on
+        c. what grid cor the piece is now on
+        d. the avaiable moves the player has
+    3. center the piece on the square
+    */
+    var mouse = calculateMousePos(evt);
+    for ( let i = 0; i < 5; i++ ) {
+        for ( let j = 0; j < 5; j++ ) {
+            var isX = false;
+            var isY = false;
+            if ( (mouse.x >= grid[i][j].x) && (mouse.x <= grid[i][j].x + 100) ) {
+                isX = true;
+            }
+            if ( (mouse.y >= grid[i][j].y) && (mouse.y <= grid[i][j].y + 100) ) {
+                isY = true;
+            }
+            if ( isX && isY ) {
+                return [i, j];
+            }
+        }
+    }
+}
+
+function calculateMousePos( evt ) {
+    var rect = canvas.getBoundingClientRect();
+    var root = document.documentElement;
+    var mouseX = evt.clientX - rect.left - root.scrollLeft;
+    var mouseY = evt.clientY - rect.top - root.scrollTop;
+    return {
+        x: mouseX,
+        y: mouseY
+    };
+}
+
+function create2DArray( rows, cols ) {
     var arr = new Array( rows );
     for ( i = 0; i < arr.length; i++ ) {
         arr[i] = new Array( cols );
@@ -92,11 +182,23 @@ function setup() {
         }
     }
 
+    //draw inital background
+    colorRect(0,0,canvas.width,canvas.height, "#21618C" );
+
+    //draw pieces
+    for ( i = 0; i < numberOfPlayers; i++ ) {
+        for ( j = 0; j < playerArr[i].pieces.length; j++ ) {
+            playerArr[i].pieces[j].x = playerArr[i].home.slots[0][j][0];
+            playerArr[i].pieces[j].y = playerArr[i].home.slots[0][j][1];
+            playerArr[i].pieces[j].draw();
+        }
+    }
+
 }
 
 function drawEverything() {
     //background color
-    colorRect(0,0,canvas.width,canvas.height, "#21618C" );
+    //colorRect(0,0,canvas.width-200,canvas.height, "#21618C" );
 
     //draw tiles
     for ( i = 0; i < ROWS; i++ ) {
@@ -108,7 +210,7 @@ function drawEverything() {
     //draw pieces
     for ( i = 0; i < numberOfPlayers; i++ ) {
         for ( j = 0; j < playerArr[i].pieces.length; j++ ) {
-            playerArr[i].pieces[j].draw( playerArr[i].home.slots[0][j][0],  playerArr[i].home.slots[0][j][1] );
+            playerArr[i].pieces[j].draw();
         }
     }
 
@@ -157,4 +259,15 @@ function shouldRollAgain() {
     else {
         x.style.display = "none";
     }
+}
+
+function dragPiece(  ) {
+    /*
+    1. find mouse position
+    2. on mouse down check to see if over a players pieces
+    3. while mouse down redraw 60fps the entire board with the new position of the piece
+    4. on mouse up check if it is a vaild title to move
+        a. center on tile if true
+        b. else return to original position
+    */
 }

@@ -4,8 +4,8 @@ function Piece( color ) {
     this.y;
     this.Tile;
 
-    this.draw = function( x, y ) {
-        colorCircle( x, y, 10, this.color );
+    this.draw = function() {
+        colorCircle( this.x,this.y, 10, this.color );
     }
 
     function colorCircle(centerX,centerY,radius,color) {
